@@ -1,0 +1,22 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+<h1>{{ choice.choice_text }}</h1>
+
+<ul>
+    {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+
+<form action='{% url "admin:index" %}' method='post'>
+    {% csrf_token %}
+    <input type='submit' value="Admin's panel">
+</form>
+<form action='{% url "redirections:index" %}' method='post'>
+    {% csrf_token %}
+    <input type='submit' value="Back to polls main page">
+</form>
